@@ -20,7 +20,7 @@ for deactivating it, in any shell
 
 run the following command
 
-`django-admin startproject mysite`
+`django-admin startproject mysite .`
 
 ### Creating apps
 
@@ -37,17 +37,31 @@ to run the server:
 
 `python manage.py runserver`
 
-run migrations to make out of the box apps in settings.py INSTALLED_APPS run without errors
+<details>
+<summary>Running the Server in Production</summary>
+Please note that `python manage.py runserver` is a lightweight web server written purely in Python.
+It should only be used in development, and in Production something more appropriate like uvicorn.
 
+https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/uvicorn/
+
+https://docs.djangoproject.com/en/4.2/howto/deployment/
+</details>
+
+<details>
+<summary>DB Migrations</summary>
+
+`migrate` will run all database migrations and keep the db up-to-date.
+
+Run the command-line client for your database and type \dt (PostgreSQL), SHOW TABLES; (MariaDB, MySQL), .tables (SQLite), 
+or SELECT TABLE_NAME FROM USER_TABLES; (Oracle) to display the tables Django created.
+
+for SQLite3: `sqlite3 db.sqlite3 .tables`
 `python manage.py migrate`
 
 when installing an app into settings.py or making model changes, 
 if you would like to store the changes as a migration:
 
 `python manage.py makemigrations polls`
-
-There’s a command that will run the migrations for you and manage your database schema automatically, 
-which is called `migrate`
 
 To check what SQL code a migration will run:
 `python manage.py sqlmigrate polls 0001`
@@ -62,6 +76,9 @@ remember the three-step guide to making model changes:
 * Change your models (in models.py).
 * Run python manage.py makemigrations to create migrations for those changes
 * Run python manage.py migrate to apply those changes to the database.
+</details>
+
+
 
 ## Playing with the API
 
@@ -73,3 +90,8 @@ We’re using this instead of simply typing “python”,
 because manage.py sets the DJANGO_SETTINGS_MODULE environment variable, 
 which gives Django the Python import path to your mysite/settings.py file.
 
+## Django Admin
+
+create a user who can login to the admin site
+
+`python manage.py createsuperuser`
